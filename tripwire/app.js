@@ -38,12 +38,11 @@ function listContents(storagename) {
 			}
 		}
 }
-
 //listed files stored on sdcard
 $(document).ready(function(){
 	
 listContents('sdcard');
-	
+	//page 
 var content = $('.content'),
     loader = $('.loader');
 content.hide();
@@ -58,9 +57,6 @@ $('.menu li a').on('click', function(e){
 
 	
 });
-
-
-
 //button click event
 $('input.btn').live('click', function() {
   console.log("buton click");
@@ -89,10 +85,6 @@ $('input.btn').live('click', function() {
 	}
 	$('#results').html("text")
 }); 
-
-
-
-
 //Retrieving current date time information
 Date.prototype.yyyymmdd = function() {
 	var yyyy = this.getFullYear().toString();
@@ -107,57 +99,71 @@ d = new Date();
 alert( d.yyyymmdd() );
 
 
-
-
 //button click event
 $('input.btn2').live('click', function() {
   console.log("buton click");
 	$('input.sec:checked').each(function() {
 	//	alert($(this).val())
-	var sdcard = navigator.getDeviceStorage('sdcard');
-
-var request = sdcard.get(	$(this).val());
-
+	var sdcard = navigator.getDeviceStorage('sdcard'); 
+   alert($('input.sec:checked').length);
+   var k=$('input.sec:checked').length;
+   var part=$('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+    }).get();
+    var part2=[];
+		for(var i=0;i<k;i++){
+		part2=part;
+   // alert(part2[i]);
+			
+		var request = sdcard.get(part2[i]);
+	
 request.onsuccess = function () {
 	alert("başarılı");
   var file = this.result;
+	alert(file.name);
 	var blob = new Blob([file], {type: "text/plain"});
   console.log("Get the file: " + file.name);
-	//alert(file.name);
+	alert(file.name);
 	var reader = new FileReader();
 reader.addEventListener("loadend", function() {
    // reader.result contains the contents of blob as a typed array
 	alert(this.result);
-	var read=this.result;
-  alert($.md5(read));
 	
+	
+	//dosya içinden satır satır okuma
+	var read=this.result;
+  //alert($.md5(read));
+	var reads = new Array();
+  reads=read.split("\n");
+	//alert(reads[1]);
+	
+	//md5 karşılaştırma
 var a="aylin janimmmm"
-
-alert($.md5(a));
+//alert($.md5(a));
 if($.md5(read)==$.md5(a)){
 		alert("değişmemiş ulan!");
 }
 	else{
 		alert("aynı değil yaw");
 	}
-	
-	
 });
 reader.readAsText(blob);
-
-
   }
- 
 
+		}
 request.onerror = function () {
    alert("başarısız!")
 	console.warn("Unable to get the file: ");
 } 
-
 });
 });
 
 
+
+
+
+
+//complete checked 
 $('input.btn3').live('click', function() {
   console.log("buton click");
 	$("input:checkbox").each(function(){
@@ -167,7 +173,7 @@ $('input.btn3').live('click', function() {
 			});
 	
 });
-
+//not checked
 $('input.btn4').live('click', function() {
   console.log("buton click");
 	$("input:checkbox").each(function(){
