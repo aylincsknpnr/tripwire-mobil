@@ -99,6 +99,10 @@ d = new Date();
 alert( d.yyyymmdd() );
 
 
+
+
+
+
 //button click event
 $('input.btn2').live('click', function() {
   console.log("buton click");
@@ -110,24 +114,31 @@ $('input.btn2').live('click', function() {
    var part=$('input[type=checkbox]:checked').map(function(_, el) {
         return $(el).val();
     }).get();
+		alert("part"+part)
     var part2=[];
-		for(var i=0;i<k;i++){
-		part2=part;
-   // alert(part2[i]);
-			
-		var request = sdcard.get(part2[i]);
+			part2=part;
+		for(var i=0;i<part2.length;i++){
 	
+    alert(i+" "+part2[i]+"part2");
+		read(part2[i]);
+		}
+	
+		function read(file){
+			alert("çalışıyorr")
+			var request = sdcard.get(file);
 request.onsuccess = function () {
 	alert("başarılı");
+
   var file = this.result;
-	alert(file.name);
-	var blob = new Blob([file], {type: "text/plain"});
+	alert(file.name+"filename");
+
+  file = new Blob([file], {type: "text/plain"});
   console.log("Get the file: " + file.name);
-	alert(file.name);
+	//alert(file.name);
 	var reader = new FileReader();
 reader.addEventListener("loadend", function() {
    // reader.result contains the contents of blob as a typed array
-	alert(this.result);
+	alert(this.result+"result");
 	
 	
 	//dosya içinden satır satır okuma
@@ -135,7 +146,7 @@ reader.addEventListener("loadend", function() {
   //alert($.md5(read));
 	var reads = new Array();
   reads=read.split("\n");
-	//alert(reads[1]);
+	alert(reads+"reads");
 	
 	//md5 karşılaştırma
 var a="aylin janimmmm"
@@ -147,16 +158,24 @@ if($.md5(read)==$.md5(a)){
 		alert("aynı değil yaw");
 	}
 });
-reader.readAsText(blob);
+reader.readAsText(file);
   }
 
-		}
+		
 request.onerror = function () {
    alert("başarısız!")
 	console.warn("Unable to get the file: ");
-} 
+} }
 });
 });
+
+
+
+
+
+
+
+
 
 
 
