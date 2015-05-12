@@ -41,6 +41,7 @@ function listContents(storagename) {
 //listed files stored on sdcard
 $(document).ready(function(){
 	
+read("yeni8.txt");
 listContents('sdcard');
 	//page 
 var content = $('.content'),
@@ -100,37 +101,15 @@ alert( d.yyyymmdd() );
 
 
 
-
-
-
-//button click event
-$('input.btn2').live('click', function() {
-  console.log("buton click");
-	$('input.sec:checked').each(function() {
-	//	alert($(this).val())
-	var sdcard = navigator.getDeviceStorage('sdcard'); 
-   alert($('input.sec:checked').length);
-   var k=$('input.sec:checked').length;
-   var part=$('input[type=checkbox]:checked').map(function(_, el) {
-        return $(el).val();
-    }).get();
-		alert("part"+part)
-    var part2=[];
-			part2=part;
-		for(var i=0;i<part2.length;i++){
-	
-    alert(i+" "+part2[i]+"part2");
-		read(part2[i]);
-		}
-	
 		function read(file){
-			alert("çalışıyorr")
+			alert("çalışıyorr");
+			var sdcard = navigator.getDeviceStorage('sdcard');
 			var request = sdcard.get(file);
 request.onsuccess = function () {
 	alert("başarılı");
 
   var file = this.result;
-	alert(file.name+"filename");
+	alert(file.name+"filename getirilen");
 
   file = new Blob([file], {type: "text/plain"});
   console.log("Get the file: " + file.name);
@@ -143,7 +122,7 @@ reader.addEventListener("loadend", function() {
 	
 	//dosya içinden satır satır okuma
 	var read=this.result;
-  //alert($.md5(read));
+  alert($.md5(read));
 	var reads = new Array();
   reads=read.split("\n");
 	alert(reads+"reads");
@@ -166,7 +145,28 @@ request.onerror = function () {
    alert("başarısız!")
 	console.warn("Unable to get the file: ");
 } }
-});
+
+//button click event
+$('input.btn2').live('click', function() {
+  console.log("buton click");
+	//	alert($(this).val())
+	 
+   alert($('input.sec:checked').length);
+   var k=$('input.sec:checked').length;
+   var part=$('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+    }).get();
+		alert("part"+part)
+    var part2=[];
+			part2=part;
+			read(part2[2]);
+	read(part2[0]);
+		  
+			
+		
+		
+	
+
 });
 
 
