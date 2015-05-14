@@ -1,5 +1,4 @@
-
-			//storage file list 
+//storage file list 
 function listContents(storagename) {
   console.log("app lunch");
 	//Clear up the list first
