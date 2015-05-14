@@ -1,3 +1,11 @@
+///denenmiş yardımcı olacak kod parçalarının not alındığı kısımdır !!!
+http://api.jquery.com/bind/
+http://stackoverflow.com/questions/8423217/jquery-checkbox-checked-state-changed-event
+http://www.learningjquery.com/2006/09/multiple-document-ready
+http://stackoverflow.com/questions/3910736/how-to-call-multiple-javascript-functions-in-onclick-event
+
+http://forum.ceviz.net/javascript-dhtml-ajax-50/javascript-belirli-araliklarla-butonun-click-olayini-calistirma-61411/
+
 
 		function read(file){
 			alert("çalışıyorr");
