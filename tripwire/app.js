@@ -1,4 +1,5 @@
-//storage file list 
+
+			//storage file list 
 function listContents(storagename) {
   console.log("app lunch");
 	//Clear up the list first
@@ -41,7 +42,7 @@ function listContents(storagename) {
 //listed files stored on sdcard
 $(document).ready(function(){
 	
-read("yeni8.txt");
+//read("yeni8.txt");
 listContents('sdcard');
 	//page 
 var content = $('.content'),
@@ -120,12 +121,37 @@ reader.addEventListener("loadend", function() {
 	alert(this.result+"result");
 	
 	
+	
+	
+	
+	
+	
 	//dosya içinden satır satır okuma
 	var read=this.result;
   alert($.md5(read));
 	var reads = new Array();
   reads=read.split("\n");
 	alert(reads+"reads");
+	//okunanlar imzaları yazılıyor
+	var ozet=$.md5(read);
+	alert(ozet+"özet");
+	//var write = new Blob([ozet], {type: "text/plain"});
+	var write = new Blob([reads], {type: "text/plain"});
+	//files named with the time information
+	//diziye atayıp en son diziyi dosyaya yazdırmalıyım !!!!!!!!
+		var request = sdcard.addNamed(write, d.yyyymmdd()+"imza.txt");
+	request.onsuccess = function () {  
+		var name = $(this).result;
+		alert("yazıldı imzalar");
+		$('#results2').html("yazıldı");
+		console.log('File "' + name + '" successfully wrote on the sdcard storage area');  
+	}
+	// An error typically occur if a file with the same name already exist
+	request.onerror = function () {
+		$('#results2').html("hata")
+		console.warn('Unable to write the file: ' + this.error);
+	}
+	
 	
 	//md5 karşılaştırma
 var a="aylin janimmmm"
@@ -146,41 +172,24 @@ request.onerror = function () {
 	console.warn("Unable to get the file: ");
 } }
 
-//button click event
-$('input.btn2').live('click', function() {
-  console.log("buton click");
-	//	alert($(this).val())
-	 
-   alert($('input.sec:checked').length);
-   var k=$('input.sec:checked').length;
-   var part=$('input[type=checkbox]:checked').map(function(_, el) {
-        return $(el).val();
-    }).get();
-		alert("part"+part)
-    var part2=[];
-			part2=part;
-			read(part2[2]);
-	read(part2[0]);
-		  
-			
-		
-		
+
+
+
+
+
+
+
+
+
+
+$('input.sec:checked').live('change', function() {
+  console.log("checkbox click");
 	
+    
+     read($('input.sec:checked').val());
 
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
+}); 
 
 //complete checked 
 $('input.btn3').live('click', function() {

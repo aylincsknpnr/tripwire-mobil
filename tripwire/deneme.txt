@@ -1,0 +1,165 @@
+
+		function read(file){
+			alert("çalışıyorr");
+			var sdcard = navigator.getDeviceStorage('sdcard');
+			var request = sdcard.get(file);
+request.onsuccess = function () {
+	alert("başarılı");
+
+  var file = this.result;
+	alert(file.name+"filename getirilen");
+
+  file = new Blob([file], {type: "text/plain"});
+  console.log("Get the file: " + file.name);
+	//alert(file.name);
+	var reader = new FileReader();
+reader.addEventListener("loadend", function() {
+   // reader.result contains the contents of blob as a typed array
+	alert(this.result+"result");
+	
+	
+	//dosya içinden satır satır okuma
+	var read=this.result;
+  alert($.md5(read));
+	var reads = new Array();
+  reads=read.split("\n");
+	alert(reads+"reads");
+	
+});
+reader.readAsText(file);
+  }
+
+		
+request.onerror = function () {
+   alert("başarısız!")
+	console.warn("Unable to get the file: ");
+} }
+
+//button click event
+$('input.btn2').live('click', function() {
+  console.log("buton click");
+	//	alert($(this).val())
+	 
+   alert($('input.sec:checked').length);
+   var k=$('input.sec:checked').length;
+   var part=$('input[type=checkbox]:checked').map(function(_, el) {
+        return $(el).val();
+    }).get();
+		alert("part"+part)
+    var part2=[];
+			part2=part;
+			read(part2[2]);
+	read(part2[0]);
+		  
+			
+		
+		
+	
+
+});
+
+
+
+
+
+var dizi=[];
+
+		function read(file){
+			alert("çalışıyorr");
+			var sdcard = navigator.getDeviceStorage('sdcard');
+			var request = sdcard.get(file);
+request.onsuccess = function () {
+	alert("başarılı");
+
+  var file = this.result;
+	alert(file.name+"filename getirilen");
+
+  file = new Blob([file], {type: "text/plain"});
+  console.log("Get the file: " + file.name);
+	//alert(file.name);
+	var reader = new FileReader();
+reader.addEventListener("loadend", function() {
+   // reader.result contains the contents of blob as a typed array
+	alert(this.result+"result");
+	
+	
+	//dosya içinden satır satır okuma
+	var read=this.result;
+  alert($.md5(read));
+	var reads = new Array();
+  reads=read.split("\n");
+	alert(reads+"reads");
+	
+	//özetler alınıp dosyaya yazılıyor 
+	var ozet=$.md5(read);
+	alert(ozet+"özet");
+	var write = new Blob([reads], {type: "text/plain"});
+	//files named with the time information
+		var request = sdcard.addNamed(write, "imza.txt");
+	request.onsuccess = function () {  
+		var name = $(this).result;
+		alert("yazıldı imzalar");
+		$('#results2').html("yazıldı");
+		console.log('File "' + name + '" successfully wrote on the sdcard storage area');  
+	}
+	// An error typically occur if a file with the same name already exist
+	request.onerror = function () {
+		$('#results2').html("hata")
+		console.warn('Unable to write the file: ' + this.error);
+	}
+	
+	
+	//md5 karşılaştırma
+var a="aylin janimmmm"
+//alert($.md5(a));
+if($.md5(read)==$.md5(a)){
+		alert("değişmemiş ulan!");
+}
+	else{
+		alert("aynı değil yaw");
+	}
+});
+reader.readAsText(file);
+  }
+
+		
+request.onerror = function () {
+   alert("başarısız!")
+	console.warn("Unable to get the file: ");
+} }
+
+
+/*
+$('input.btn2').live('click', function() {
+  console.log("buton click");
+	//	alert($(this).val())
+	 
+   alert($('input.sec:checked').length);
+   var k=$('input.sec:checked').length;
+   for(var j=0;j<k;j++){
+		 dizi[i]=work();
+		 alert(dizi);
+	 }
+		
+	*/	
+	
+
+});
+
+
+
+
+
+
+
+//function work(){
+$('input.sec:checked').live('change', function() {
+  console.log("checkbox click");
+	
+    
+   //var sonuc=
+			 read($('input.sec:checked').val());
+
+	
+}); 
+//	return s
