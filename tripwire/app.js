@@ -11,6 +11,7 @@ function listContents(storagename) {
 				//file name add checkbox
 				$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#izle');
 				$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#ilkçalış');
+					$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#sistemkontrol');
 				var res=$("#results").html();
 		/*var ifrm = document.getElementById('content');
 	ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
@@ -31,6 +32,7 @@ function listContents(storagename) {
 				
 				$('<p><input type="button" class="btn2 btn-secondary" value="ÇALIŞTIR" /></p>').appendTo('#ilkçalış');
 				$('<p><input type="button" class="btn5 btn-secondary" value="RAPOR" /></p>').appendTo('#rapor');
+				$('<p><input type="button" class="btn6 btn-secondary" value="Sistem Kontrol" /></p>').appendTo('#sistemkontrol');
 				
 				this.done = true;
 			}
@@ -108,10 +110,11 @@ Date.prototype.yyyymmdd = function() {
 d = new Date();
 alert( d.yyyymmdd() );
 var arr=[];
+var arr2=[];
 var ozet;
 var returnvalue;
 var arrstring;
-
+var arrstring2;
 																			function read(file){
 																			//	alert("çalışıyorr");
 																				var sdcard = navigator.getDeviceStorage('sdcard');
@@ -119,10 +122,10 @@ var arrstring;
 																	request.onsuccess = function () {
 																		//alert("başarılı");
 
-																		var file = this.result;
+																var comefile = this.result;
 																		
 
-																		file = new Blob([file], {type: "text/plain"});
+															file = new Blob([comefile], {type: "text/plain"});
 																		
 																		
 																		var reader = new FileReader();
@@ -136,8 +139,11 @@ var arrstring;
 						//okunanlar imzaları yazılıyor
 					
 					//	alert(ozet+"özet");
-						arr.push(	$.md5(read));
+						var smile=comefile+" dosyanın özeti: "+$.md5(read)													
+									arr.push(smile);
 						 arrstring=arr.join("\n");
+																					
+			
 				//	alert("dizi özet..."+arr[0]);
 					//alert("stringarr..."+" "+arrstring+" ");
 					});
@@ -155,17 +161,18 @@ var arrstring;
 																			}
 
 
+
 						function read2(kontrol){
 																			//	alert("çalışıyorr");
 																				var sdcard = navigator.getDeviceStorage('sdcard');
 																				var request = sdcard.get(kontrol);
 																	request.onsuccess = function () {
 																		//alert("başarılı");
-
-																		var file = this.result;
+																	var comefile = this.result;
+				
 																		
 
-																		file = new Blob([file], {type: "text/plain"});
+																		file = new Blob([comefile], {type: "text/plain"});
 																		
 																		
 																		var reader = new FileReader();
@@ -176,6 +183,9 @@ var arrstring;
 						
 						reads=read.split("\n");
 						alert(reads+"....reads");
+							var smile=comefile+" dosyanın özeti: "+$.md5(read)																
+						arr2.push(smile);
+						 arrstring2=arr2.join("\n");											
 					
 					});
 					reader.readAsText(file);
@@ -191,11 +201,110 @@ var arrstring;
 								
 																			}
 
+
+var ilkimza=[];
+var kontrolimza=[];
+						function first(){
+																		
+																				var sdcard = navigator.getDeviceStorage('sdcard');
+																				var request = sdcard.get("ilkimzalar.txt");
+																	request.onsuccess = function () {
+																	
+
+																		var comefile = this.result;
+																		
+
+																		file = new Blob([comefile], {type: "text/plain"});
+																		
+																		
+																		var reader = new FileReader();
+																	reader.addEventListener("loadend", function() {																												
+	
+						//dosya içinden satır satır okuma
+						var read=this.result;
+						
+						var reads=read.split("\n");
+				     ilkimza.push(reads);
+					
+					});
+					reader.readAsText(file);
+						}
+
+
+					request.onerror = function () {
+						 alert("başarısız!")
+						console.warn("Unable to get the file: ");
+					} 
+							
+   
+								
+			
+						}
+
+function second(){
+																		
+																				var sdcard = navigator.getDeviceStorage('sdcard');
+																				var request = sdcard.get("ikinciimzalar.txt");
+																	request.onsuccess = function () {
+																	
+
+																		var comefile = this.result;
+																		
+
+																		file = new Blob([comefile], {type: "text/plain"});
+																		
+																		
+																		var reader = new FileReader();
+																	reader.addEventListener("loadend", function() {																												
+	
+						//dosya içinden satır satır okuma
+						var read=this.result;
+						var reads=read.split("\n");
+				     kontrolimza.push(reads);
+					
+					});
+					reader.readAsText(file);
+						}
+
+
+					request.onerror = function () {
+						 alert("başarısız!")
+						console.warn("Unable to get the file: ");
+					} 
+							
+   
+								
+			
+						}
+
 														$('input.sec:checked').live('change', function() {
 																									console.log("checkbox click");
 																										read($('input.sec:checked').val());                           
                                                     
 																								}); 
+
+$('input.sec:checked').live('change', function() {
+																									console.log("checkbox click");
+																										read2($('input.sec:checked').val());                           
+                                                    
+																								}); 
+
+var m=ilkimza.length;
+//rapor için
+	$('input.btn5').live('click', function() {
+  
+		for(var i=0;i<m;i++){
+			if(ilkimza[i]!=kontrolimza[i]){;
+			 alert("değişen"+ilkimza[i]);
+			}									 
+			else{
+				alert("değişiklik yok");
+			}
+			
+		}
+		
+});
+
 
 $('input.btn2').live('click', function() {
 	alert("tıklanınca...."+arrstring);
@@ -237,7 +346,39 @@ $('input.btn4').live('click', function() {
 });
 
 
+var m=ilkimza.length;
+//rapor için
 	$('input.btn5').live('click', function() {
-		read2("/sdcard/imzalar.txt");
-		read2("/sdcard/yeni8.txt");
+  
+		for(var i=0;i<m;i++){
+			if(ilkimza[i]!=kontrolimza[i]){;
+			 alert("değişen"+ilkimza[i]);
+			}									 
+			else{
+				alert("değişiklik yok");
+			}
+			
+		}
+		
+});
+
+//sistem kontrol için
+$('input.btn6').live('click', function() {
+	alert("tıklanınca...."+arrstring2);
+	var sdcard3 = navigator.getDeviceStorage("sdcard");
+	var hash = new Blob([arrstring2], {type: "text/plain"});
+	//var request = sdcard3.addNamed(hash, d.yyyymmdd()+".imza.txt");
+	var request = sdcard3.addNamed(hash, "ikinciimzalar.txt");
+	request.onsuccess = function () {  
+		alert("yazılıyorr");
+		var name = $(this).result;
+		$('#results2').html("yazıldı");
+		console.log('File "' + name + '" successfully wrote on the sdcard storage area');  
+	}
+	// An error typically occur if a file with the same name already exist
+	request.onerror = function () {
+		alert("yazılamıyorr");
+		$('#results2').html("hata")
+		console.warn('Unable to write the file: ' + this.error);
+	}
 });
