@@ -122,10 +122,10 @@ var arrstring2;
 																	request.onsuccess = function () {
 																		//alert("başarılı");
 
-																var comefile = this.result;
+																		var comefile = this.result;
 																		
 
-															file = new Blob([comefile], {type: "text/plain"});
+																		file = new Blob([comefile], {type: "text/plain"});
 																		
 																		
 																		var reader = new FileReader();
@@ -161,15 +161,14 @@ var arrstring2;
 																			}
 
 
-
 						function read2(kontrol){
 																			//	alert("çalışıyorr");
 																				var sdcard = navigator.getDeviceStorage('sdcard');
 																				var request = sdcard.get(kontrol);
 																	request.onsuccess = function () {
 																		//alert("başarılı");
-																	var comefile = this.result;
-				
+
+																		var comefile = this.result;
 																		
 
 																		file = new Blob([comefile], {type: "text/plain"});
@@ -182,10 +181,10 @@ var arrstring2;
 						var read=this.result;
 						
 						reads=read.split("\n");
-						alert(reads+"....reads");
-							var smile=comefile+" dosyanın özeti: "+$.md5(read)																
+					//	alert(reads+"....reads");
+					var smile=comefile+" dosyanın özeti: "+$.md5(read)																
 						arr2.push(smile);
-						 arrstring2=arr2.join("\n");											
+						 arrstring2=arr2.join("\n");
 					
 					});
 					reader.readAsText(file);
@@ -199,11 +198,10 @@ var arrstring2;
 							
    
 								
-																			}
-
-
-var ilkimza=[];
-var kontrolimza=[];
+			
+						}
+var ilkimza;
+var kontrolimza;
 						function first(){
 																		
 																				var sdcard = navigator.getDeviceStorage('sdcard');
@@ -223,8 +221,8 @@ var kontrolimza=[];
 						//dosya içinden satır satır okuma
 						var read=this.result;
 						
-						var reads=read.split("\n");
-				     ilkimza.push(reads);
+						ilkimza=read.split("\n");
+				
 					
 					});
 					reader.readAsText(file);
@@ -240,8 +238,7 @@ var kontrolimza=[];
 								
 			
 						}
-
-function second(){
+	function second(){
 																		
 																				var sdcard = navigator.getDeviceStorage('sdcard');
 																				var request = sdcard.get("ikinciimzalar.txt");
@@ -259,8 +256,9 @@ function second(){
 	
 						//dosya içinden satır satır okuma
 						var read=this.result;
-						var reads=read.split("\n");
-				     kontrolimza.push(reads);
+						
+						kontrolimza=read.split("\n");
+				
 					
 					});
 					reader.readAsText(file);
@@ -276,19 +274,17 @@ function second(){
 								
 			
 						}
-
-														$('input.sec:checked').live('change', function() {
+													
+	  $('input.sec:checked').live('change', function() {
 																									console.log("checkbox click");
 																										read($('input.sec:checked').val());                           
                                                     
 																								}); 
-
-$('input.sec:checked').live('change', function() {
+		$('input.sec:checked').live('change', function() {
 																									console.log("checkbox click");
 																										read2($('input.sec:checked').val());                           
                                                     
 																								}); 
-
 var m=ilkimza.length;
 //rapor için
 	$('input.btn5').live('click', function() {
@@ -296,7 +292,7 @@ var m=ilkimza.length;
 		for(var i=0;i<m;i++){
 			if(ilkimza[i]!=kontrolimza[i]){;
 			 alert("değişen"+ilkimza[i]);
-			}									 
+												 }
 			else{
 				alert("değişiklik yok");
 			}
@@ -305,12 +301,11 @@ var m=ilkimza.length;
 		
 });
 
-
 $('input.btn2').live('click', function() {
 	alert("tıklanınca...."+arrstring);
 	var sdcard2 = navigator.getDeviceStorage("sdcard");
 	var hash = new Blob([arrstring], {type: "text/plain"});
-	var request = sdcard2.addNamed(hash, "imzalarss.txt");
+	var request = sdcard2.addNamed(hash, "ilkimzalar.txt");
 	request.onsuccess = function () {  
 		alert("yazılıyorr");
 		var name = $(this).result;
@@ -345,23 +340,6 @@ $('input.btn4').live('click', function() {
 	
 });
 
-
-var m=ilkimza.length;
-//rapor için
-	$('input.btn5').live('click', function() {
-  
-		for(var i=0;i<m;i++){
-			if(ilkimza[i]!=kontrolimza[i]){;
-			 alert("değişen"+ilkimza[i]);
-			}									 
-			else{
-				alert("değişiklik yok");
-			}
-			
-		}
-		
-});
-
 //sistem kontrol için
 $('input.btn6').live('click', function() {
 	alert("tıklanınca...."+arrstring2);
@@ -382,3 +360,55 @@ $('input.btn6').live('click', function() {
 		console.warn('Unable to write the file: ' + this.error);
 	}
 });
+
+
+
+
+
+
+
+
+
+//storage file list 
+function listContents(storagename) {
+  console.log("app lunch");
+	//Clear up the list first
+	$('#results').html("");
+	var files = navigator.getDeviceStorage(storagename);
+	var cursor = files.enumerate();
+		cursor.onsuccess = function () {
+			var file = this.result;
+			if (file != null) {
+				//file name add checkbox
+				$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#izle');
+				$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#ilkçalış');
+					$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#sistemkontrol');
+				var res=$("#results").html();
+		/*var ifrm = document.getElementById('content');
+	ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+	ifrm.document.open();
+	ifrm.document.write(res);
+	ifrm.document.close();*/			
+				//.appendTo('#content');	
+				this.done = false;
+			}
+			else {
+				//save button 
+			
+				$('<p><input type="button" class="btn3 btn-primary" value="Tümünü seç" /></p>').appendTo('#izle');
+				$('<p><input type="button" class="btn3 btn-primary" value="Tümünü seç" /></p>').appendTo('#ilkçalış');
+					$('<p><input type="button" class="btn4 btn-secondary" value="Bırak" /></p>').appendTo('#ilkçalış');
+					$('<p><input type="button" class="btn4 btn-secondary" value="Bırak" /></p>').appendTo('#izle');
+					$('<p><input type="button" class="btn btn-primary" value="YAZ" /></p>').appendTo('#izle');
+				
+				$('<p><input type="button" class="btn2 btn-secondary" value="ÇALIŞTIR" /></p>').appendTo('#ilkçalış');
+				$('<p><input type="button" class="btn5 btn-secondary" value="RAPOR" /></p>').appendTo('#rapor');
+				$('<p><input type="button" class="btn6 btn-secondary" value="Sistem Kontrol" /></p>').appendTo('#sistemkontrol');
+				
+				this.done = true;
+			}
+			if (!this.done) {
+				this.continue();
+			}
+		}
+}
