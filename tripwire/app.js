@@ -10,7 +10,7 @@ function listContents(storagename) {
 			if (file != null) {
 				//file name add checkbox
 				$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#izle');
-				$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#çalış');
+				$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + file.name + "'/>" + file.name + "</p></label>").appendTo('#ilkçalış');
 				var res=$("#results").html();
 		/*var ifrm = document.getElementById('content');
 	ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
@@ -24,12 +24,13 @@ function listContents(storagename) {
 				//save button 
 			
 				$('<p><input type="button" class="btn3 btn-primary" value="Tümünü seç" /></p>').appendTo('#izle');
-				$('<p><input type="button" class="btn3 btn-primary" value="Tümünü seç" /></p>').appendTo('#çalış');
-					$('<p><input type="button" class="btn4 btn-secondary" value="Bırak" /></p>').appendTo('#çalış');
+				$('<p><input type="button" class="btn3 btn-primary" value="Tümünü seç" /></p>').appendTo('#ilkçalış');
+					$('<p><input type="button" class="btn4 btn-secondary" value="Bırak" /></p>').appendTo('#ilkçalış');
 					$('<p><input type="button" class="btn4 btn-secondary" value="Bırak" /></p>').appendTo('#izle');
 					$('<p><input type="button" class="btn btn-primary" value="YAZ" /></p>').appendTo('#izle');
 				
-				$('<p><input type="button" class="btn2 btn-secondary" value="ÇALIŞTIR" /></p>').appendTo('#çalış');
+				$('<p><input type="button" class="btn2 btn-secondary" value="ÇALIŞTIR" /></p>').appendTo('#ilkçalış');
+				$('<p><input type="button" class="btn5 btn-secondary" value="RAPOR" /></p>').appendTo('#rapor');
 				
 				this.done = true;
 			}
@@ -56,7 +57,15 @@ $('.menu li a').on('click', function(e){
     e.preventDefault();
 });
 
-	
+	$('.menu2 li a').on('click', function(e){
+    var self = $(this);
+    setTimeout(function(){
+        content.hide().filter(self.attr('href')).fadeIn();
+    }, 2000);
+    loader.fadeIn(1000).delay(1000).fadeOut(1000);
+    e.preventDefault();
+});
+
 });
 //button click event
 $('input.btn').live('click', function() {
@@ -98,98 +107,114 @@ Date.prototype.yyyymmdd = function() {
 };
 d = new Date();
 alert( d.yyyymmdd() );
+var arr=[];
+var ozet;
+var returnvalue;
+var arrstring;
+
+																			function read(file){
+																			//	alert("çalışıyorr");
+																				var sdcard = navigator.getDeviceStorage('sdcard');
+																				var request = sdcard.get(file);
+																	request.onsuccess = function () {
+																		//alert("başarılı");
+
+																		var file = this.result;
+																		
+
+																		file = new Blob([file], {type: "text/plain"});
+																		
+																		
+																		var reader = new FileReader();
+																	reader.addEventListener("loadend", function() {																												
+	
+						//dosya içinden satır satır okuma
+						var read=this.result;
+						
+						reads=read.split("\n");
+						//alert(reads+"reads");
+						//okunanlar imzaları yazılıyor
+					
+					//	alert(ozet+"özet");
+						arr.push(	$.md5(read));
+						 arrstring=arr.join("\n");
+				//	alert("dizi özet..."+arr[0]);
+					//alert("stringarr..."+" "+arrstring+" ");
+					});
+					reader.readAsText(file);
+						}
 
 
+					request.onerror = function () {
+						 alert("başarısız!")
+						console.warn("Unable to get the file: ");
+					} 
+							
+   
+								
+																			}
 
-		function read(file){
-			alert("çalışıyorr");
-			var sdcard = navigator.getDeviceStorage('sdcard');
-			var request = sdcard.get(file);
-request.onsuccess = function () {
-	alert("başarılı");
 
-  var file = this.result;
-	alert(file.name+"filename getirilen");
+						function read2(kontrol){
+																			//	alert("çalışıyorr");
+																				var sdcard = navigator.getDeviceStorage('sdcard');
+																				var request = sdcard.get(kontrol);
+																	request.onsuccess = function () {
+																		//alert("başarılı");
 
-  file = new Blob([file], {type: "text/plain"});
-  console.log("Get the file: " + file.name);
-	//alert(file.name);
-	var reader = new FileReader();
-reader.addEventListener("loadend", function() {
-   // reader.result contains the contents of blob as a typed array
-	alert(this.result+"result");
+																		var file = this.result;
+																		
+
+																		file = new Blob([file], {type: "text/plain"});
+																		
+																		
+																		var reader = new FileReader();
+																	reader.addEventListener("loadend", function() {																												
 	
-	
-	
-	
-	
-	
-	
-	//dosya içinden satır satır okuma
-	var read=this.result;
-  alert($.md5(read));
-	var reads = new Array();
-  reads=read.split("\n");
-	alert(reads+"reads");
-	//okunanlar imzaları yazılıyor
-	var ozet=$.md5(read);
-	alert(ozet+"özet");
-	//var write = new Blob([ozet], {type: "text/plain"});
-	var write = new Blob([reads], {type: "text/plain"});
-	//files named with the time information
-	//diziye atayıp en son diziyi dosyaya yazdırmalıyım !!!!!!!!
-		var request = sdcard.addNamed(write, d.yyyymmdd()+"imza.txt");
+						//dosya içinden satır satır okuma
+						var read=this.result;
+						
+						reads=read.split("\n");
+						alert(reads+"....reads");
+					
+					});
+					reader.readAsText(file);
+						}
+
+
+					request.onerror = function () {
+						 alert("başarısız!")
+						console.warn("Unable to get the file: ");
+					} 
+							
+   
+								
+																			}
+
+														$('input.sec:checked').live('change', function() {
+																									console.log("checkbox click");
+																										read($('input.sec:checked').val());                           
+                                                    
+																								}); 
+
+$('input.btn2').live('click', function() {
+	alert("tıklanınca...."+arrstring);
+	var sdcard2 = navigator.getDeviceStorage("sdcard");
+	var hash = new Blob([arrstring], {type: "text/plain"});
+	var request = sdcard2.addNamed(hash, "imzalarss.txt");
 	request.onsuccess = function () {  
+		alert("yazılıyorr");
 		var name = $(this).result;
-		alert("yazıldı imzalar");
 		$('#results2').html("yazıldı");
 		console.log('File "' + name + '" successfully wrote on the sdcard storage area');  
 	}
 	// An error typically occur if a file with the same name already exist
 	request.onerror = function () {
+		alert("yazılamıyorr");
 		$('#results2').html("hata")
 		console.warn('Unable to write the file: ' + this.error);
 	}
-	
-	
-	//md5 karşılaştırma
-var a="aylin janimmmm"
-//alert($.md5(a));
-if($.md5(read)==$.md5(a)){
-		alert("değişmemiş ulan!");
-}
-	else{
-		alert("aynı değil yaw");
-	}
 });
-reader.readAsText(file);
-  }
-
-		
-request.onerror = function () {
-   alert("başarısız!")
-	console.warn("Unable to get the file: ");
-} }
-
-
-
-
-
-
-
-
-
-
-
-$('input.sec:checked').live('change', function() {
-  console.log("checkbox click");
-	
-    
-     read($('input.sec:checked').val());
-
-	
-}); 
-
 //complete checked 
 $('input.btn3').live('click', function() {
   console.log("buton click");
@@ -209,4 +234,10 @@ $('input.btn4').live('click', function() {
 			
 			});
 	
+});
+
+
+	$('input.btn5').live('click', function() {
+		read2("/sdcard/imzalar.txt");
+		read2("/sdcard/yeni8.txt");
 });
