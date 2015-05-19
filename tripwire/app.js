@@ -125,7 +125,6 @@ $('input.btn').live('click', function() {
      var j=kritikdizi.length;
 	    alert("filenames i..."+kritikdizi);
 	   for(var i=0;i<j;i++){
-			
 			 	$("<label><p><input type='checkbox' class='sec' name='file[]' value='" + kritikdizi[i] + "'/>" + kritikdizi[i] + "</p></label>").appendTo('#kritik');
 		 }
 	
@@ -171,7 +170,7 @@ $('input.btn8').live('click', function() {
 		$('#results2').html("hata")
 		console.warn('Unable to write the file: ' + this.error);
 	}
-	$('#results').html("text")
+	$('#results').html("text")	
 });
 //kritik geri dönme iptal 10
 
@@ -182,7 +181,8 @@ $('input.btn8').live('click', function() {
 //her seçimde okuma yapması için 
 $('input.sec:checked').live('change', function() {
 																									console.log("checkbox click");
-																										read($('input.sec:checked').val());                           
+																										read($('input.sec:checked').val());  
+	                       
                                                     
 																								}); 
 
@@ -194,93 +194,75 @@ $('input.sec:checked').live('change', function() {
 
 //ilk çalıştırmadaki dosyaları okuma özet alma
 function read(file){
-																			//	alert("çalışıyorr");
-																				var sdcard = navigator.getDeviceStorage('sdcard');
-																				var request = sdcard.get(file);
-																	request.onsuccess = function () {
-																		//alert("başarılı");
+	//	alert("çalışıyorr");
+	var sdcard = navigator.getDeviceStorage('sdcard');
+	var request = sdcard.get(file);
+	request.onsuccess = function () {
+		//alert("başarılı");
 
-																var comefile = this.result;
-																		
-
-															file = new Blob([comefile], {type: "text/plain"});
-																		
-																		
-																		var reader = new FileReader();
-																	reader.addEventListener("loadend", function() {																												
-	
-						//dosya içinden satır satır okuma
-						var read=this.result;
-						
-						reads=read.split("\n");
-						//alert(reads+"reads");
-						//okunanlar imzaları yazılıyor
-					
-					//	alert(ozet+"özet");
-						var smile=comefile+" dosyanın özeti: "+$.md5(read)													
-									arr.push(smile);
-						 arrstring=arr.join("\n");
-																					
-			
-				//	alert("dizi özet..."+arr[0]);
-					//alert("stringarr..."+" "+arrstring+" ");
-					});
-					reader.readAsText(file);
-						}
+		var comefile = this.result;
 
 
-					request.onerror = function () {
-						 alert("başarısız!")
-						console.warn("Unable to get the file: ");
-					} 
-							
-   
-								
-																			}
+		file = new Blob([comefile], {type: "text/plain"});
+
+
+		var reader = new FileReader();
+		reader.addEventListener("loadend", function() {																												
+
+			//dosya içinden satır satır okuma
+			var read=this.result;
+
+			reads=read.split("\n");
+			//alert(reads+"reads");
+			//okunanlar imzaları yazılıyor
+
+			//	alert(ozet+"özet");
+			var smile=comefile+" dosyanın özeti: "+$.md5(read)													
+			arr.push(smile);
+			arrstring=arr.join("\n");
+
+
+			//	alert("dizi özet..."+arr[0]);
+			//alert("stringarr..."+" "+arrstring+" ");
+		});
+		reader.readAsText(file);
+	}
+
+	request.onerror = function () {
+		alert("başarısız!")
+		console.warn("Unable to get the file: ");
+	} 
+
+
+
+}
 
 //sistem kontrolündeki dosyaları okuma özet alma
 function read2(kontrol){
-																			//	alert("çalışıyorr");
-																				var sdcard = navigator.getDeviceStorage('sdcard');
-																				var request = sdcard.get(kontrol);
-																	request.onsuccess = function () {
-																		//alert("başarılı");
-																	var comefile = this.result;
-				
-																		
-
-																		file = new Blob([comefile], {type: "text/plain"});
-																		
-																		
-																		var reader = new FileReader();
-																	reader.addEventListener("loadend", function() {																												
-	
-						//dosya içinden satır satır okuma
-						var read=this.result;
-						
-						reads=read.split("\n");
-					//	alert(reads+"....reads");
-							var smile=comefile+" dosyanın özeti: "+$.md5(read)																
-						arr2.push(smile);
-						 arrstring2=arr2.join("\n");											
-					
-					});
-					reader.readAsText(file);
-						}
-
-
-					request.onerror = function () {
-						 alert("başarısız!")
-						console.warn("Unable to get the file: ");
-					} 
-							
-   
-								
-																			}
-
-
-
-
+	//	alert("çalışıyorr");
+	var sdcard = navigator.getDeviceStorage('sdcard');
+	var request = sdcard.get(kontrol);
+	request.onsuccess = function () {
+		//alert("başarılı");
+		var comefile = this.result;
+		file = new Blob([comefile], {type: "text/plain"});
+		var reader = new FileReader();
+		reader.addEventListener("loadend", function() {																												
+			//dosya içinden satır satır okuma
+			var read=this.result;
+			reads=read.split("\n");
+			//	alert(reads+"....reads");
+			var smile=comefile+" dosyanın özeti: "+$.md5(read)																
+			arr2.push(smile);
+			arrstring2=arr2.join("\n");											
+		});
+		reader.readAsText(file);
+	}
+	request.onerror = function () {
+		alert("başarısız!")
+		console.warn("Unable to get the file: ");
+	} 
+}
 //ilk çalıştırma
 $('input.btn2').live('click', function() {
 	alert("tıklanınca...."+arrstring);
@@ -289,10 +271,10 @@ $('input.btn2').live('click', function() {
 	var request = sdcard2.addNamed(hash, "imzalarss.txt");
 	request.onsuccess = function () {  
 		alert("yazılıyorr");
-		var name = $(this).result;
+	  var name = $(this).result;
 		$('#results2').html("yazıldı");
 		console.log('File "' + name + '" successfully wrote on the sdcard storage area');  
-	}
+	}	
 	// An error typically occur if a file with the same name already exist
 	request.onerror = function () {
 		alert("yazılamıyorr");
@@ -300,8 +282,6 @@ $('input.btn2').live('click', function() {
 		console.warn('Unable to write the file: ' + this.error);
 	}
 });
-
-
 //complete checked 
 $('input.btn3').live('click', function() {
   console.log("buton click");
@@ -310,7 +290,6 @@ $('input.btn3').live('click', function() {
 				this.checked = true;
 			
 			});
-	
 });
 
 //not checked
@@ -327,12 +306,16 @@ $('input.btn4').live('click', function() {
 
 //rapor için
 	$('input.btn5').live('click', function() {
-		
-
-	
+ sendMail();
  
-	
-});
+	});
+
+
+
+
+
+ 
+
 
 //sistem kontrol için
 $('input.btn6').live('click', function() {
@@ -354,20 +337,35 @@ $('input.btn6').live('click', function() {
 		console.warn('Unable to write the file: ' + this.error);
 	}
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var encodedData = window.btoa(arrstring2);
+function sendMail(){
+  $.ajax({
+    type: "POST",
+    url: "https://mandrillapp.com/api/1.0/messages/send.json",
+    data: {
+      'key': 'ATC-kw9QdL97Wsa7Ppe08A',
+      'message': {
+        'from_email': 'aylincpinar@gmail.com',
+        'to': [
+          {
+            'email': 'ferdirecep@gmail.com',
+            'name': 'ferdi',
+            'type': 'to'
+          }
+        ],
+				"attachments": [
+            {
+                "type": "text/plain",
+                "name": "rapor.txt",
+                "content":  encodedData
+            }
+        ],
+        'subject': 'tripwire',
+        'html': 'tripwire rapor'
+      }
+    }
+  });
+}
 
 
 
