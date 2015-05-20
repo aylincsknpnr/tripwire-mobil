@@ -32,90 +32,63 @@
 	</div><!-- /header -->
 
 	<div data-role="content">
-	
-		<div id="result" >
-				<div id="result2" >
-			
-<ul class="menu">
-    <li>
-        <a href="#izle">İzlenecek dizinler </a>
-		
-    </li>
-
-	
-    <li>
-        <a href="#çalış">çalıştırma</a>
-	
-    </li>
-	 
-    
-	 <li>
-        <a href="#rapor">rapor</a>
+	<div id="result" >
+  <div id="result2" >
+		<div id ="ana"> 
+		<!--Ana MENU-->
+		<ul class="anamenu">
+			<li>
+				<a href="#izle">İzlenecek dizinler </a>
+			</li>
 		 
-    </li>
-	 
-</ul>
-			
+			<li>
+				<a href="#rapor">rapor</a>		 
+			</li>	 
+		</ul>
+		</div>
+		
+		
 <div id="container">
 
     <div class="loader"></div>
-    
-    <div class="content" id="izle">
-		             	
-								<ul class="menu3">
-									
-									<li>
-										 
-									   <a href="#kritik">Kritik Dosyalar</a>                  				
-													
-							</li>
-									
-									
-								
-									<li>
-									 <a href="#normal">Normal Dosyalar</a>						
-						</li>	
-									<li>
-									<a href="javascript:history.go(-1)">Geri Dön4</a> 
-									</li>
-									
-										</ul>
-    </div>
-    
-							<div class="content" id="çalış">
-								
-								<ul class="menu2">
-									<li>
-									<a href="#ilkçalış">ilk çalıştırma</a>
-										 
-							</li>
-									<li>
-										<a href="javascript:history.go(-1)">Geri Dön6</a> 
-									</li>
-									<li>
-									<a href="#sistemkontrol">sistem kontrolü</a>				 
-							</li>
-									
-								</ul>
-							</div>
+    	<div class="content" id="rapor"></div>
+
 	
-	  <div class="content" id="ilkçalış">
-		
-    </div>
-			<div class="content" id="kritik">
-				
-    </div>
-			<div class="content" id="normal">
+<!--IZLENEN DIZINLER IÇIN MENU-->
+	<div class="content" id="izle">	
+		<ul class="izlemenu">
+			<li>
+				<a href="#kritik">Kritik Dosyalar</a>                  				
+			</li>
+			<li>
+				<a href="#normal">Normal Dosyalar</a>						
+			</li>	
+			<li>
+				<a href="javascript:history.go(-1)">Geri Dön</a> 
+			</li>
+
+		</ul>
+	</div>
+	
+
+	
+ <div class="content" id="ilkçalış"></div>
+<div class="content" id="sistemkontrol"></div>
+	
+<!--kRITIK DOSSYALAR IÇIN MENU-->
+	<div class="content" id="kritik">
+
+	</div>
+	
+	
+<!--NORMAL DOSYALAR IÇIN MENU-->
+	<div class="content" id="normal">
    
-    </div>
-	  <div class="content" id="rapor">
- 
-    </div>
-	<div class="content" id="sistemkontrol">
-   
-    </div>
-    
-</div>
+	</div>
+
+	
+
+					</div>
 		</div>
 			<div id="results" />
 		<!-- /contentstyle="display:none -->
@@ -191,7 +164,7 @@
 	width:300px;
 	height:50px
 }  
-		.menu {
+		.anamenu {
 	background-color:#FB6423;
 	color:#fff;
 	font-family:'Helvetica Neue';
@@ -205,7 +178,7 @@
 	width:280px;
 	height:200px
 }  
-		.menu2 {
+		.izlemenu {
 	background-color:#FB6423;
 	color:#fff;
 	font-family:'Helvetica Neue';
@@ -219,7 +192,22 @@
 	width:280px;
 	height:200px
 }  
-		.menu3 {
+		.kritikmenu {
+	background-color:#FB6423;
+	color:#fff;
+	font-family:'Helvetica Neue';
+	font-size:20px;
+	line-height:50px;
+	border-radius:30px;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border:0;
+	text-shadow:#C17C3A 0 -1px 0;
+	width:280px;
+	height:200px
+}  
+
+		.kdevammenu {
 	background-color:#FB6423;
 	color:#fff;
 	font-family:'Helvetica Neue';
@@ -234,6 +222,35 @@
 	height:200px
 }  
 	 
+		.normalmenu {
+	background-color:#FB6423;
+	color:#fff;
+	font-family:'Helvetica Neue';
+	font-size:20px;
+	line-height:50px;
+	border-radius:30px;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border:0;
+	text-shadow:#C17C3A 0 -1px 0;
+	width:280px;
+	height:200px
+}  
+
+		.ndevammenu {
+	background-color:#FB6423;
+	color:#fff;
+	font-family:'Helvetica Neue';
+	font-size:20px;
+	line-height:50px;
+	border-radius:30px;
+	-webkit-border-radius:20px;
+	-moz-border-radius:20px;
+	border:0;
+	text-shadow:#C17C3A 0 -1px 0;
+	width:280px;
+	height:200px
+}  
 	.btn5{
 	background-color:#FB6423;
 	color:#fff;
@@ -340,9 +357,7 @@
     overflow-x: hidden;
   }
   #byte_range { margin-top: 5px; }
-</style>
-            
-</style>
+</style>            
 
 
 
