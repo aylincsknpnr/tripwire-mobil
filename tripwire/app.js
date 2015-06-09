@@ -356,7 +356,7 @@ $('input.btn10').live('click', function() {
 		if(okudizi[i]!=arr4[i]){
 			alert("kritik dosyalarda değişiklik var"+" "+arr4[i]);
 			send=arr4[i];
-	  	encodedData =window.btoa(unescape(encodeURIComponent(send)));
+	  	encodedData1 =window.btoa(unescape(encodeURIComponent(send)));
 		}
 		else{
 			alert("değişmemiş!!!");
@@ -409,7 +409,7 @@ var okunan2;
 		if(okudizi2[i]!=arr3[i]){
 			alert("normal dosyalarda değişiklik var"+" "+arr3[i]);
 			send2=arr3[i];
-	  	//encodedData =window.btoa(unescape(encodeURIComponent(send)));
+	  	encodedData2 =window.btoa(unescape(encodeURIComponent(send2)));
 		}
 		else{
 			alert("değişmemiş!!!");
@@ -469,7 +469,7 @@ Date.prototype.yyyymmdd = function() {
 	return yyyy + "." + (mm[1]?mm:"0"+mm[0]) + "." + (dd[1]?dd:"0"+dd[0]) + "-" + (h[1]?h:"0"+h[0]) +"." + (m[1]?m:"0"+m[0]) +"." + (s[1]?s:"0"+s[0]); 
 };
 d = new Date();
-
+//var mail = document.getElementById('ml').val();
 function sendMail(){
 	 $.ajax({
     type: "POST",
@@ -481,17 +481,24 @@ function sendMail(){
         'to': [
           {
             'email': 'aylincpinar@gmail.com',
-            'name': 'aylin',
+            'name': 'rapor',
             'type': 'to'
           }
         ],
 				"attachments": [
             {
                 "type": "text/plain",
-                "name": "rapor.txt",
-                "content":encodedData
+                "name": "kritikdosyalarRapor.txt",
+                "content":encodedData1
+            },
+					 {
+                "type": "text/plain",
+                "name": "normaldosyalarRapor.txt",
+                "content":encodedData2
             }
+					
         ],
+				
         'subject': 'tripwire',
         'html': 'tripwire rapor'
       }
@@ -526,9 +533,6 @@ $('input.btn2').live('click', function() {
 	});
 
 });
-
-
-
 
 
 
