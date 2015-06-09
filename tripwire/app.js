@@ -36,7 +36,8 @@ function listContents(storagename) {
             $('<p><input type="button" class="btn7 btn-primary" value="ILKÇALIŞTIR" /></p>').appendTo('#normal');
             $('<p><input type="button" class="btn8 btn-primary" value="SISTEM KONTROL" /></p>').appendTo('#normal');
 			  $('<p><input type="button" class="btn9 btn-primary" value="Mail gönder" /></p>').appendTo('#rapor');
-			   $('<p><input type="button" class="btn10 btn-primary" value="raporla" /></p>').appendTo('#rapor');
+			   $('<p><input type="button" class="btn10 btn-primary" value="kritik raporla" /></p>').appendTo('#rapor');
+			 $('<p><input type="button" class="btn11 btn-primary" value="normal raporla" /></p>').appendTo('#rapor');
 			this.done = true;
 		}
 		if (!this.done) {
@@ -94,7 +95,7 @@ function read(file){
 			//okunanlar imzaları yazılıyor
 
 			//	alert(ozet+"özet");
-		 smile=file+" ...dosyanın özeti:... "+$.md5(read)													
+		 smile=file+"dosyanın özeti:"+$.md5(read)													
 			arr.push(smile);
 			arrstring=arr.join("\n");
 		
@@ -171,7 +172,7 @@ function read2(kontrol){
 			var read=this.result;
 			reads=read.split("\n");
 			//	alert(reads+"....reads");
-			var smile=kontrol+" ....dosyanın özeti:... "+$.md5(read)																
+			var smile=kontrol+"dosyanın özeti:"+$.md5(read)																
 			arr2.push(smile);
 			arrstring2=arr2.join("\n");											
 		});
@@ -226,7 +227,7 @@ function read3(kontrol2){
 			var read=this.result;
 			reads=read.split("\n");
 			//	alert(reads+"....reads");
-			var smile=kontrol2+" ....dosyanın özeti:... "+$.md5(read)																
+			var smile=kontrol2+"dosyanın özeti:"+$.md5(read)																
 			arr3.push(smile);
 			arrstring3=arr3.join("\n");											
 		});
@@ -281,7 +282,7 @@ function read4(kontrol3){
 			var read=this.result;
 			reads=read.split("\n");
 			//	alert(reads+"....reads");
-			var smile=kontrol3+" ....dosyanın özeti:... "+$.md5(read)																
+			var smile=kontrol3+"dosyanın özeti:"+$.md5(read)																
 			arr4.push(smile);
 			arrstring4=arr4.join("\n");											
 		});
@@ -327,8 +328,8 @@ var degisik=[];
 //rapor için
 $('input.btn10').live('click', function() {
 	var okudizi=[];
-var okunan;
-
+	var okunan;
+	
 	var sdcard = navigator.getDeviceStorage('sdcard');
 	var request = sdcard.get("kritik.txt");
 	request.onsuccess = function () {
@@ -355,7 +356,7 @@ var okunan;
 		if(okudizi[i]!=arr4[i]){
 			alert("kritik dosyalarda değişiklik var"+" "+arr4[i]);
 			send=arr4[i];
-	  	encodedData = window.btoa(send);
+	  	encodedData =window.btoa(unescape(encodeURIComponent(send)));
 		}
 		else{
 			alert("değişmemiş!!!");
@@ -372,10 +373,60 @@ var okunan;
 		console.warn("Unable to get the file: ");
 	} 
 
+	
 
 });
 
+$('input.btn11').live('click', function() {
+		var okudizi2=[];
 
+var okunan2;
+
+	var send2;
+	var sdcard2 = navigator.getDeviceStorage('sdcard');
+	var request2 = sdcard2.get("normal.txt");
+	request2.onsuccess = function () {
+		//alert("başarılı");
+
+		var comefile = this.result;
+
+
+		var fileb = new Blob([comefile], {type: "text/plain"});
+
+
+		var reader = new FileReader();
+		reader.addEventListener("loadend", function() {																												
+
+			//dosya içinden satır satır okuma
+			okunan2=this.result;
+      okudizi2.push(okunan2);
+			alert("okunannormal"+okudizi2)
+	alert("raporlama başarılı");
+   
+	  alert("3"+arr3)
+		
+	for(i=0;i<okudizi2.length;i++){
+		if(okudizi2[i]!=arr3[i]){
+			alert("normal dosyalarda değişiklik var"+" "+arr3[i]);
+			send2=arr3[i];
+	  	//encodedData =window.btoa(unescape(encodeURIComponent(send)));
+		}
+		else{
+			alert("değişmemiş!!!");
+		}
+		
+	}
+	//alert("raedsss"+read)
+		});
+		reader.readAsText(fileb);
+	}
+
+	request2.onerror = function () {
+		alert("başarısız!")
+		console.warn("Unable to get the file: ");
+	} 
+
+});
 
 //page
 $(document).ready(function(){
@@ -475,7 +526,6 @@ $('input.btn2').live('click', function() {
 	});
 
 });
-
 
 
 
